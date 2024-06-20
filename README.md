@@ -43,4 +43,8 @@ https://nuxt.com/modules/vue-query
 pnpm i @hebilicious/vue-query-nuxt @tanstack/vue-query
 
 pnpm i dotenv
+
+3. ----------
+
+https://reqres.in/api-docs/
 ```

@@ -1,12 +1,7 @@
-<script setup>
-import { useRuntimeConfig } from '#app'
-
-const config = useRuntimeConfig()
-const apiBaseUrl = config.public.apiBaseUrl
-</script>
+<script setup></script>
 
 <template>
   <div>
-    <div>API Base URL: {{ apiBaseUrl }}</div>
+    <User />
   </div>
 </template>
