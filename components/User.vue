@@ -1,19 +1,28 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/userStore'
-import { fetchUsers } from '~/composables/useUsers'
+// import { useUserStore } from '~/stores/userStore'
+// import { fetchUsers } from '~/composables/useUsers'
+// const { loggedIn, user, session, clear } = useUserSession()
 
-const { isLoading, isError, data: users, token, error } = await fetchUsers()
+// const { isLoading, isError, data: users, token, error } = await fetchUsers()
 
-const userStore = useUserStore();
+// const userStore = useUserStore();
 
-// userStore.setToken('123');
+// // userStore.setToken('123');
 
-watch(users, async (newUsers, oldUsers) => {
-  console.log('newUsers', newUsers);
+// watch(users, async (newUsers, oldUsers) => {
+//   // console.log('newUsers', newUsers);
 
-  const users = newUsers?.data.map((x) => x);
-  userStore.setUsers(users);
-});
+//   console.log("loggedIn", loggedIn.value);
+
+//   const users = newUsers?.data.map((x) => x);
+//   userStore.setUsers(users);
+// });
+
+const { session } = useUserSession()
+const token = "HELLO 11";
+
+const { $api } = useNuxtApp()
+const { data: users } = await useAsyncData('users', () => $api('/users?delay=5'))
 
 </script>
 
@@ -26,7 +35,7 @@ watch(users, async (newUsers, oldUsers) => {
       <h1>users</h1>
       <div v-if="isLoading">Loading..</div>
       <pre v-else>
-        {{ users?.data }}
+        {{ users }}
       </pre>
     </pre>
   </div>

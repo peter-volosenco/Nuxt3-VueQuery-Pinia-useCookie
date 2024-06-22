@@ -1,12 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// @ts-nocheck
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL, // Accessible client-side
     },
   },
-  devtools: { enabled: true },
-  modules: ["@pinia/nuxt","@hebilicious/vue-query-nuxt"],
   vueQuery: {
     // useState key used by nuxt for the vue query state.
     stateKey: "vue-query-nuxt", // default
@@ -20,5 +19,11 @@ export default defineNuxtConfig({
     },
     // Pass the vue query plugin options here ....
     vueQueryPluginOptions: {}
-  }
+  },
+  devtools: { enabled: true },
+  modules: [
+    "@pinia/nuxt",
+    "@hebilicious/vue-query-nuxt",
+    "nuxt-auth-utils"
+  ],
 })

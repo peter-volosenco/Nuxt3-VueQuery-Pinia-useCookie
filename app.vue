@@ -2,6 +2,8 @@
 
 <template>
   <div>
-    <User />
+    <NuxtLayout name="main-layout">
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

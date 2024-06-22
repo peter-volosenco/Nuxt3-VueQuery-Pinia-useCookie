@@ -1,7 +1,8 @@
-
 const fetchWithAuth = async (url: string, options:any) => {
-  const tokenFromCookie = useCookie('token');
-  const token = String(tokenFromCookie.value);
+  // const tokenFromCookie = useCookie('token');
+  // const token = String(tokenFromCookie.value);
+
+  const token = useCookie('token')
 
   const response = await fetch(url, {
       ...options,
@@ -20,17 +21,30 @@ export const fetchUsers = async () => {
   const config = useRuntimeConfig()
   const apiBaseUrl = config.public.apiBaseUrl
 
-  const tokenFromCookie = useCookie('token')
-  // tokenFromCookie.value = token;
-
   const response = useQuery({
     queryKey: ['users'],
     queryFn: () => fetchWithAuth(`${apiBaseUrl}/users?delay=5`, {}),
   })
 
+
+
+
+// //get user
+// const response = axios.get('https://jsonplaceholder.typicode.com/users').then(function (response) {
+//   // handle success
+//   console.log(response);
+// })
+//   .catch(function (error) {
+//     // handle error
+//     console.log(error);
+//   })
+//   .finally(function () {
+//     // always executed
+//   });
+
   // { isLoading, isError, data, error }
   // return response; //response.json()
 
-  return {...response, token: tokenFromCookie.value
+  return {...response, token: useCookie('token').value
   }
 }
