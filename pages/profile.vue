@@ -14,7 +14,7 @@ definePageMeta({
 <template>
   <div>
     <h3>
-      Page: User
+      Page: My Profile
     </h3>
   </div>
 </template>

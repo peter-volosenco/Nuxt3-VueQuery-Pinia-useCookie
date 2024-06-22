@@ -2,12 +2,16 @@
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
-    const {user} = await $fetch('http://localhost:3000/api/login/check')
+    try {
+        const {user} = await $fetch("/api/auth/check")
 
-    console.log('auth check', user);
+        console.log('auth check', user);
 
-    if (user?.id != null) {
-        return
+        if (user?.id != null) {
+            return;
+        }
+    }catch(e){
+        console.error('auth check error', e);
     }
 
     return navigateTo('/login')

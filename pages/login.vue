@@ -1,24 +1,48 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: [
+    function ({ params }, from) {
 
-const login = async () => {
-  const user = $fetch('http://localhost:3000/api/login/signin')
+      //default to homepage in case logged in
+      if (useAuthStore().loggedIn)
+        return navigateTo("/");
+    },
+  ]
+})
 
-  user.then((res) => {
-    navigateTo('/')
-  });
+
+
+const login = () => {
+  useAuthStore().signIn();
+  navigateTo("/");
 }
+
+
+
 </script>
 
 <template>
   <div>
     <h3>
-      Page: login
+      Page: Login
     </h3>
 
+    <p>
+      Login before accesing protected page.
+    </p>
+
     <div>
-      <div @click="login">Login</div>
+      <div class="btn-login" @click="login">Login</div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.btn-login {
+  padding: 2px 4px;
+  background-color: gray;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+}
+</style>

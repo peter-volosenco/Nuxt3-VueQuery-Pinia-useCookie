@@ -4,15 +4,17 @@ definePageMeta({
     function ({ params }, from) {
       // console.log('middleware', params, from)
     },
-    'auth'
   ]
 })
 </script>
 
 <template>
   <h3>
-    Page: index
+    Page: Home page
   </h3>
+  <p>
+    Welcome to the home page
+  </p>
 </template>
 
 <style scoped></style>
