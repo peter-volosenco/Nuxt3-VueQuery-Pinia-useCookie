@@ -14,7 +14,10 @@ definePageMeta({
     <h3>
       Page: My Profile
     </h3>
+    <div>User:</div>
     <pre>{{ useAuthStore().user }}</pre>
+    <div>Session:</div>
+    <pre>{{ useAuthStore().session }}</pre>
   </div>
 </template>
 

@@ -1,18 +1,12 @@
 // @ts-nocheck
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+    const data = await $fetch("/api/auth/check")
 
-    try {
-        const {user} = await $fetch("/api/auth/check")
+    console.log(to);
 
-        console.log('auth check', user);
+    if(data?.loggedInAt != null)
+        return;
 
-        if (user?.id != null) {
-            return;
-        }
-    }catch(e){
-        console.error('auth check error', e);
-    }
-
-    return navigateTo('/login')
+    return navigateTo('/login?redirectTo=' + to.path)
 })

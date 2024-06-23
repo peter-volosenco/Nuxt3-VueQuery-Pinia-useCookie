@@ -3,21 +3,31 @@ definePageMeta({
   middleware: [
     function ({ params }, from) {
 
+      const { query } = useRoute();
+
       //default to homepage in case logged in
       if (useAuthStore().loggedIn)
-        return navigateTo("/");
+        return navigateTo(query.redirectTo as string, {
+          replace: true,
+        });
+
     },
   ]
 })
 
-
+const { query } = useRoute();
 
 const login = () => {
   useAuthStore().signIn();
-  navigateTo("/");
 }
 
-
+watchEffect(async () => {
+  if (useAuthStore().user) {
+    await navigateTo(query.redirectTo as string, {
+      replace: true,
+    });
+  }
+});
 
 </script>
 
