@@ -7,8 +7,6 @@ definePageMeta({
     'auth'
   ]
 })
-
-
 </script>
 
 <template>
@@ -16,6 +14,7 @@ definePageMeta({
     <h3>
       Page: My Profile
     </h3>
+    <pre>{{ useAuthStore().user }}</pre>
   </div>
 </template>
 

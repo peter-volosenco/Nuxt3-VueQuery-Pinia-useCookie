@@ -4,5 +4,6 @@ export const useAuthStore = defineStore("Auth", () => {
     await $fetch("/api/auth/login", { method: "POST" });
     await fetch();
   };
-  return { signIn, loggedIn, user, session, clear, fetch };
+
+  return { signIn, loggedIn, user, session, clear, fetch, };
 });
