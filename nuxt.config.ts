@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL, // Accessible client-side
+      apiBaseUrlJsonPh: process.env.API_BASE_URL_JSONPH, // Accessible client-side
     },
   },
   vueQuery: {
