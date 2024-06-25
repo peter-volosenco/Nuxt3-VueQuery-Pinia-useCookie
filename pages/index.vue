@@ -8,16 +8,6 @@ definePageMeta({
     },
   ]
 })
-
-import { useQuery } from "@tanstack/vue-query";
-
-import queryBuilder from "~/services/APIQueries";
-import queryOptions from "~/services/APIQueryOptions";
-
-const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
-
-const todosResponse = await useQuery(queries.todos());
-
 </script>
 
 <template>
@@ -28,10 +18,8 @@ const todosResponse = await useQuery(queries.todos());
     <p>
       Welcome to the home page
     </p>
-    <h4>Vue Query options:</h4>
-    <pre>{{ queryOptions }}</pre>
     <h4>To dos:</h4>
-    <pre>{{ todosResponse }}</pre>
+    <pre>{{ useTodosStore().todo }}</pre>
   </div>
 </template>
 

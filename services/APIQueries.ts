@@ -7,18 +7,27 @@ class queryBuilder {
     this.queryDefaultOptions = options;
   }
 
-  todos = (options = this.queryDefaultOptions) => {
+  todo = (index: number) => {
     return {
-      queryKey: "todos",
+      queryKey: [`todo${index}`],
+      queryFn: () => {
+        return fetch(`${this.baseURL}/todos/${index}`).then((res) => res.json());
+      }
+    };
+  };
+
+  todos = () => {
+    return {
+      queryKey: ["todos"],
       queryFn: () => {
         return fetch(`${this.baseURL}/todos`).then((res) => res.json());
-      },
+      }
     };
   };
 
   users = () => {
     return {
-      queryKey: "users",
+      queryKey: ["users"],
       queryFn: () => {
         return fetch(`${this.baseURL}/users`).then((res) => res.json());
       },
@@ -27,7 +36,7 @@ class queryBuilder {
 
   posts = () => {
     return {
-      queryKey: "posts",
+      queryKey: ["posts"],
       queryFn: () => {
         return fetch(`${this.baseURL}/posts`).then((res) => res.json());
       },

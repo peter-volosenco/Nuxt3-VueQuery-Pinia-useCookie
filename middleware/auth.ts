@@ -8,5 +8,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if(data?.loggedInAt != null)
         return;
 
+
     return navigateTo('/login?redirectTo=' + to.path)
 })

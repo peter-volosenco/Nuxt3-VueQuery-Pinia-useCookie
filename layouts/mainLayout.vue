@@ -5,6 +5,12 @@ const logout = () => {
   navigateTo("/");
 }
 
+const { query } = useRoute();
+
+const login = () => {
+  useAuthStore().signIn();
+}
+
 </script>
 
 <template>
@@ -14,7 +20,8 @@ const logout = () => {
       <nuxt-link to="/">Home</nuxt-link>
       <nuxt-link to="/Profile">My Profile</nuxt-link>
       <nuxt-link to="/Users">Users</nuxt-link>
-      <span href="/login" class="btn-logout" v-if="useAuthStore().loggedIn" @click="logout">Logout</span>
+      <span class="btn-logout" v-if="useAuthStore().loggedIn" @click="logout">Logout</span>
+      <span class="btn-login" v-if="!useAuthStore().loggedIn" @click="login">Login</span>
     </div>
     <slot />
   </div>
@@ -26,6 +33,14 @@ a {
 }
 
 .btn-logout {
+  padding: 2px 4px;
+  background-color: gray;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-login {
   padding: 2px 4px;
   background-color: gray;
   display: inline-block;
