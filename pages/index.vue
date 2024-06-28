@@ -9,21 +9,22 @@ definePageMeta({
   ]
 })
 
+//Pinia Store load data through Vue Query
 useTodosStore().loadOneBeta(9);
 useTodosStore().loadManyBeta();
 </script>
 
 <template>
   <div>
-    <h3>
+    <h1>
       Page: Home page
-    </h3>
+    </h1>
     <p>
-      Welcome to the home page
+      Welcome to the Home Page
     </p>
-    <h4>To do one response:</h4>
+    <h4>Pinia store: To do one (response):</h4>
     <pre>{{ useTodosStore().todoResponse }}</pre>
-    <h4>To do one response:</h4>
+    <h4>Pinia store: To do list (response):</h4>
     <pre>{{ useTodosStore().todosResponse }}</pre>
   </div>
 </template>
