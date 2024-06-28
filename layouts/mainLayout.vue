@@ -14,8 +14,8 @@ const login = () => {
 </script>
 
 <template>
-  <div>
-    <h2>Nav</h2>
+  <div id="layout">
+    <h1>Navigation</h1>
     <div>
       <nuxt-link to="/">Home</nuxt-link>
       <nuxt-link to="/Profile">My Profile</nuxt-link>

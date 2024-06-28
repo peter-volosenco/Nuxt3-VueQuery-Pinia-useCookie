@@ -38,9 +38,45 @@
 </script>
 
 <template>
-  <div>
+  <div id="app">
     <NuxtLayout name="main-layout">
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
+
+<style>
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+#layout {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+#indexPage {
+  margin-top: 40px;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+</style>
