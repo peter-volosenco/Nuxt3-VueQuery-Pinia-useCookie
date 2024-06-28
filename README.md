@@ -12,6 +12,18 @@ pnpm run dev
 pnpm run build
 # Locally preview production build:
 pnpm run preview
+
+# -----------
+npm i -g @antfu/ni
+
+# Install packages:
+ni
+
+# Run scripts:
+nr
+
+# Upgrade packages:
+nu
 ```
 
 ## Commands
