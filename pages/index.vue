@@ -18,6 +18,12 @@ definePageMeta({
     <p>
       Welcome to the home page
     </p>
+    <h4>Status:</h4>
+    <pre>{{ useTodosStore().allStatus }}</pre>
+    <h4>Erros:</h4>
+    <pre>{{ useTodosStore().errors?.[0] }}</pre>
+    <h4>Loading:</h4>
+    <pre>{{ useTodosStore().loading }}</pre>
     <h4>To dos:</h4>
     <pre>{{ useTodosStore().todo }}</pre>
   </div>

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 type Todo = {
   userId: number;
   id: number;
@@ -5,8 +7,14 @@ type Todo = {
   completed: boolean;
 };
 
+import { useQuery } from "@tanstack/vue-query";
+import queryBuilder from "~/services/APIQueries";
+import queryOptions from "~/services/APIQueryOptions";
+
 export const useTodosStore = defineStore("Todos", () => {
   // Create state for holding Todos
+  const allStatus = ref<string>('');
+  const loading = ref<boolean>(false);
   const errors = ref<string[]>([]);
   const todos = ref<Todo[]>([]);
   const todo = ref<Todo>({} as Todo);
@@ -29,12 +37,30 @@ export const useTodosStore = defineStore("Todos", () => {
     }
   };
 
+  const loadBeta = async (index = 1) => {
+    errors.value = [];
+
+
+    const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
+    let {
+      data, error, isLoading, status
+    } = useQuery(queries.todo(index));
+
+    todo.value = data;
+    errors.value.push(error);
+    loading.value = isLoading;
+    allStatus.value = status;
+  }
+
   return {
+    loading,
     errors,
     todos,
     todo,
     loadData,
     setData,
-    setOne
+    setOne,
+    loadBeta,
+    allStatus
   };
 });
