@@ -19,14 +19,12 @@ const loadUsers = async () => {
 </script>
 
 <template>
-  <div>
-    <h3>
+  <div class="page">
+    <h1>
       Page: Users
-    </h3>
+    </h1>
 
-    <div class="btn-load" @click="loadUsers">Load users</div>
-
-    <br />
+    <p class="btn-load" @click="loadUsers">Load users</p>
 
     <pre>{{ JSON.stringify(rUsers?.data, null, 2) }}</pre>
   </div>

@@ -66,7 +66,7 @@ body {
   padding: 20px;
 }
 
-#indexPage {
+.page {
   margin-top: 40px;
 }
 

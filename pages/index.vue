@@ -15,7 +15,7 @@ useTodosStore().loadManyBeta();
 </script>
 
 <template>
-  <div id="indexPage">
+  <div id="indexPage" class="page">
     <h1>
       Page: Home page
     </h1>

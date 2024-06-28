@@ -32,10 +32,10 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div>
-    <h3>
+  <div class="page">
+    <h1>
       Page: Login
-    </h3>
+    </h1>
 
     <p>
       Login before accesing protected page.
