@@ -13,54 +13,59 @@ import queryOptions from "~/services/APIQueryOptions";
 
 export const useTodosStore = defineStore("Todos", () => {
   // Create state for holding Todos
-  const allStatus = ref<string>('');
-  const loading = ref<boolean>(false);
-  const errors = ref<string[]>([]);
-  const todos = ref<Todo[]>([]);
-  const todo = ref<Todo>({} as Todo);
 
-  /** Function to load Todo data */
-  const setData = (data:any) => {
-    todos.value = data;
-  };
+  const todoResponse = ref({
+    data: {} as Todo,
+    error: null,
+    isLoading: false,
+    status: null,
+    isFetching: false,
+    isPending: false
+   });
 
-  const setOne = (data:any) => {
-    todo.value = data;
-  };
+   const todosResponse = ref({
+    data: [] as Todo[],
+    error: null,
+    isLoading: false,
+    status: null,
+    isFetching: false,
+    isPending: false
+   });
 
-  const loadData = async () => {
-    try {
-      // Fetch data from the server
-      todos.value = await $fetch("/api/todos");
-    } catch (error: any) {
-      errors.value.push(error.message);
-    }
-  };
-
-  const loadBeta = async (index = 1) => {
-    errors.value = [];
-
-
+   const loadManyBeta = async (index = 1) => {
     const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
+
     let {
-      data, error, isLoading, status
+      data, error, isLoading, status, isFetching, isPending
+    } = useQuery(queries.todos());
+
+    todosResponse.value.data = data;
+    todosResponse.value.error = error;
+    todosResponse.value.isLoading = isLoading;
+    todosResponse.value.status = status;
+    todosResponse.value.isFetching = isFetching;
+    todosResponse.value.isPending = isPending;
+  }
+
+  const loadOneBeta = async (index = 1) => {
+    const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
+
+    let {
+      data, error, isLoading, status, isFetching, isPending
     } = useQuery(queries.todo(index));
 
-    todo.value = data;
-    errors.value.push(error);
-    loading.value = isLoading;
-    allStatus.value = status;
+    todoResponse.value.data = data;
+    todoResponse.value.error = error;
+    todoResponse.value.isLoading = isLoading;
+    todoResponse.value.status = status;
+    todoResponse.value.isFetching = isFetching;
+    todoResponse.value.isPending = isPending;
   }
 
   return {
-    loading,
-    errors,
-    todos,
-    todo,
-    loadData,
-    setData,
-    setOne,
-    loadBeta,
-    allStatus
+    todoResponse,
+    todosResponse,
+    loadOneBeta,
+    loadManyBeta
   };
 });

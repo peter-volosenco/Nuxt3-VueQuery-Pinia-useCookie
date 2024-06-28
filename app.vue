@@ -7,20 +7,16 @@
 // let queryTodo = useQuery(queries.todo(1));
 // useTodosStore().setOne(queryTodo.data);
 
-useTodosStore().loadBeta(1);
+// useTodosStore().loadBeta(1);
+// const doerefresh = ref(false);
+// import { useQueryClient } from "@tanstack/vue-query";
+// const queryClient = useQueryClient()
+// const test = () => {
+//   queryClient.invalidateQueries({ queryKey: ['todo', 1] })
+//   console.log('test');
+// }
 
-
-const doerefresh = ref(false);
-
-import { useQueryClient } from "@tanstack/vue-query";
-const queryClient = useQueryClient()
-
-const test = () => {
-  queryClient.invalidateQueries({ queryKey: ['todo', 1] })
-
-  console.log('test');
-}
-
+// <div style="cursor: pointer; background-color: aliceblue; display: inline-block;" @click="test">Invalidate</div>
 
 // const runWithDelay = async (callback) => {
 //   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -43,8 +39,6 @@ const test = () => {
 
 <template>
   <div>
-    <div style="cursor: pointer; background-color: aliceblue; display: inline-block;" @click="test">Invalidate
-    </div>
     <NuxtLayout name="main-layout">
       <NuxtPage />
     </NuxtLayout>

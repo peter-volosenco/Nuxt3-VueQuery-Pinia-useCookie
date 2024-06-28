@@ -8,17 +8,24 @@ class queryBuilder {
     this.queryDefaultOptions = options;
   }
 
-  fetcher = async () => {
+  Sleep = async (ms: number) => {
+    return await new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  fetcherOne = async (id: number | null) => {
     this.toDoId++;
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    return await fetch(`${this.baseURL}/todos/${this.toDoId}`).then((res) => res.json());
+    return await fetch(`${this.baseURL}/todos/${id ?? this.toDoId}`).then((res) => res.json());
+  };
+
+  fetcherMany = async () => {
+    return await fetch(`${this.baseURL}/todos`).then((res) => res.json());
   };
 
   todo = (index: number) => {
     return {
       queryKey: ['todo', index],
       queryFn: () => {
-        return this.fetcher()
+        return this.fetcherOne(index)
       },
       staleTime: Infinity,
       cacheTime: Infinity,
@@ -29,7 +36,7 @@ class queryBuilder {
     return {
       queryKey: ["todos"],
       queryFn: () => {
-        return fetch(`${this.baseURL}/todos`).then((res) => res.json());
+        return this.fetcherMany() //fetch(`${this.baseURL}/todos`).then((res) => res.json());
       },
       staleTime: Infinity,
       cacheTime: Infinity,
