@@ -43,10 +43,10 @@ export const useTodosStore = defineStore("Todos", () => {
           queryFn: async () => {
             return fetch(
               `${config.public.apiBaseUrlJsonPh}/todos/${index}`
-            ).then((res) => res.json()); //this.fetcherOne(index)
+            ).then((res) => res?.json()); //this.fetcherOne(index)
           },
-          staleTime: Infinity,
-          cacheTime: Infinity,
+          staleTime: 5000, //Infinity
+          cacheTime: 5000, //Infinity
         },
         queryClient
       );
@@ -75,8 +75,8 @@ export const useTodosStore = defineStore("Todos", () => {
               `${config.public.apiBaseUrlJsonPh}/todos/`
             ).then((res) => res.json()); //this.fetcherOne(index)
           },
-          staleTime: Infinity,
-          cacheTime: Infinity,
+          staleTime: 5000, //Infinity
+          cacheTime: 5000, //Infinity
         },
         queryClient
       );

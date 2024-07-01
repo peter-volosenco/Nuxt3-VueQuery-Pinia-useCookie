@@ -19,48 +19,19 @@ const queryClient = new QueryClient({
   },
 })
 
-const r = ref({})
 const toDoIndex = ref(1)
 
-const load1 = async () => {
 
-  // useTodosStore().loadOneBeta(9);
+/*
+  This Use Query doesn't share cache with Pinia use Query
 
-  // const todos = () => {
-  //   return {
-  //     queryKey: ["todos"],
-  //     queryFn: () => {
-  //       return fetch(`https://jsonplaceholder.typicode.com/todos`).then((res) => res.json());
-  //     },
-  //     staleTime: Infinity,
-  //     cacheTime: Infinity,
-  //   };
-  // };
+  Uncomment the code below to see
 
-  // let r1 = queryClient.fetchQuery(todos());
-
-  try {
-    const queryKey = ['posts'];
-    const queryFn = () => fetch(`https://jsonplaceholder.typicode.com/todos`).then((res) => res.json());
-    const data = await queryClient.fetchQuery({ queryKey, queryFn })
-
-    console.log(data);
-  } catch (error) {
-    console.log(error)
-  }
-
-  // const r1 = await queryClient.fetchQuery({
-  //   queryKey: ['posts'],
-  //   queryFn: fetch(`https://jsonplaceholder.typicode.com/todos`).then((res) => res.json())
-  // })
-
-  // r.value = r1;
-}
-
+  It will load same data twice
+*/
 // const config = useRuntimeConfig();
-
-// const x = await useQuery({
-//   queryKey: ["todos", 9],
+// const loadsTwiceWithPinia = await useQuery({
+//   queryKey: ["todos", 1],
 //   queryFn: async () => {
 //     return fetch(`${config.public.apiBaseUrlJsonPh}/todos/9`).then(
 //       (res) => res.json()
@@ -69,6 +40,7 @@ const load1 = async () => {
 //   staleTime: Infinity,
 //   cacheTime: Infinity,
 // });
+
 
 const loadMany = async () => {
   useTodosStore().loadManyBeta();
@@ -82,10 +54,28 @@ const loadOneStoreAuth = async () => {
 }
 
 //Pinia Store load data through Vue Query
-// useTodosStore().loadOneBeta(9);
+
+onMounted(() => {
+  useTodosStore().loadOneBeta(1);
+})
+
 // useTodosStore().loadManyBeta();
 
+/*
+  Older code
+*/
+// const r = ref({})
+// const load1 = async () => {
+//   try {
+//     const queryKey = ['posts'];
+//     const queryFn = () => fetch(`https://jsonplaceholder.typicode.com/todos`).then((res) => res.json());
+//     const data = await queryClient.fetchQuery({ queryKey, queryFn })
 
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 </script>
 
 <template>
@@ -97,11 +87,12 @@ const loadOneStoreAuth = async () => {
       Welcome to the Home Page
     </p>
 
-    <div class="btn-load" @click="loadOne">Load One</div>
+    <div class="btn-load" @click="loadOne">Load 'To do' by index</div>
     <input type="number" v-model="toDoIndex" min="1" step="1" />
     <hr />
-    <div class="btn-load" @click="loadMany">Load Many</div>
+    <div class="btn-load" @click="loadMany">Load Many 'To dos'</div>
     <hr />
+    <!-- <pre>{{ loadsTwiceWithPinia }}</pre> -->
 
     <h4>Pinia store: To do one (response):</h4>
     <pre>{{ useTodosStore().todoResponse }}</pre>
