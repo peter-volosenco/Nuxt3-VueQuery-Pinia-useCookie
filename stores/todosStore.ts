@@ -34,9 +34,10 @@ export const useTodosStore = defineStore("Todos", () => {
   const todosResponse = ref([]);
 
   const loadOneBeta = async (index = 1) => {
-    scope.run(async () => {
-      console.log('Start effect scope for use query todo index ',  index);
 
+    console.log('Start effect scope for use query todo index ',  index);
+
+    scope.run(async () => {
       todoResponse.value = await useQuery(
         {
           queryKey: ["todo", index],
@@ -64,9 +65,10 @@ export const useTodosStore = defineStore("Todos", () => {
 
   //many
   const loadManyBeta = async () => {
-    scope.run(async () => {
-      console.log('Start effect scope for use query todos');
 
+    console.log('Start effect scope for use query todos');
+
+    scope.run(async () => {
       todosResponse.value = await useQuery(
         {
           queryKey: ["todos"],
