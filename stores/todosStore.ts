@@ -7,65 +7,95 @@ type Todo = {
   completed: boolean;
 };
 
-import { useQuery } from "@tanstack/vue-query";
-import queryBuilder from "~/services/APIQueries";
-import queryOptions from "~/services/APIQueryOptions";
+type TodoResponse = {
+  data: Todo;
+  error: any;
+  isLoading: boolean;
+  status: string;
+  isFetching: boolean;
+  isPending: boolean;
+};
+
+import { useQueryClient, useQuery } from "@tanstack/vue-query";
 
 export const useTodosStore = defineStore("Todos", () => {
   // Create state for holding Todos
 
-  const todoResponse = ref({
-    data: {} as Todo,
-    error: null,
-    isLoading: false,
-    status: null,
-    isFetching: false,
-    isPending: false
-   });
+  // Effect scope required to avoid memory leaks warning
+  // 1. Vue Query doesn't allow usage of 'useQuery' outside of a component
+  // 2. To fix this pass queryClient as a parameter
+  // 3. To avoid console warnings, use effectScope
+  const scope = effectScope();
 
-   const todosResponse = ref({
-    data: [] as Todo[],
-    error: null,
-    isLoading: false,
-    status: null,
-    isFetching: false,
-    isPending: false
-   });
+  const queryClient = useQueryClient();
+  const config = useRuntimeConfig();
 
-   const loadManyBeta = async (index = 1) => {
-    const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
-
-    let {
-      data, error, isLoading, status, isFetching, isPending
-    } = useQuery(queries.todos());
-
-    todosResponse.value.data = data;
-    todosResponse.value.error = error;
-    todosResponse.value.isLoading = isLoading;
-    todosResponse.value.status = status;
-    todosResponse.value.isFetching = isFetching;
-    todosResponse.value.isPending = isPending;
-  }
+  const todoResponse = ref({});
+  const todosResponse = ref([]);
 
   const loadOneBeta = async (index = 1) => {
-    const queries = new queryBuilder(useRuntimeConfig().public.apiBaseUrlJsonPh, queryOptions.passive);
+    scope.run(async () => {
+      console.log('Start effect scope for use query todo index ',  index);
 
-    let {
-      data, error, isLoading, status, isFetching, isPending
-    } = useQuery(queries.todo(index));
+      todoResponse.value = await useQuery(
+        {
+          queryKey: ["todo", index],
+          queryFn: async () => {
+            return fetch(
+              `${config.public.apiBaseUrlJsonPh}/todos/${index}`
+            ).then((res) => res.json()); //this.fetcherOne(index)
+          },
+          staleTime: Infinity,
+          cacheTime: Infinity,
+        },
+        queryClient
+      );
 
-    todoResponse.value.data = data;
-    todoResponse.value.error = error;
-    todoResponse.value.isLoading = isLoading;
-    todoResponse.value.status = status;
-    todoResponse.value.isFetching = isFetching;
-    todoResponse.value.isPending = isPending;
-  }
+      /*
+       Doesn't matter, because pinia is already in an effect scope
+      */
+      // watch(todoResponse.value, () => {
+      //    // to dispose all effects in the scope
+      //    scope.stop()
+      // })
+    });
+  };
+
+
+  //many
+  const loadManyBeta = async () => {
+    scope.run(async () => {
+      console.log('Start effect scope for use query todos');
+
+      todosResponse.value = await useQuery(
+        {
+          queryKey: ["todos"],
+          queryFn: async () => {
+            return fetch(
+              `${config.public.apiBaseUrlJsonPh}/todos/`
+            ).then((res) => res.json()); //this.fetcherOne(index)
+          },
+          staleTime: Infinity,
+          cacheTime: Infinity,
+        },
+        queryClient
+      );
+
+      /*
+       Doesn't matter, because pinia is already in an effect scope
+      */
+      // watch(todoResponse.value, () => {
+      //    // to dispose all effects in the scope
+      //    scope.stop()
+      // })
+    });
+  };
 
   return {
     todoResponse,
     todosResponse,
+
     loadOneBeta,
-    loadManyBeta
+    loadManyBeta,
   };
 });

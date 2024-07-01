@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // @ts-nocheck
 export default defineNuxtConfig({
+  devtools: {
+    enabled: true // or false to disable
+  },
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL, // Accessible client-side
@@ -13,7 +16,7 @@ export default defineNuxtConfig({
     // If you only want to import some functions, specify them here.
     // You can pass false or an empty array to disable this feature.
     // default: ["useQuery", "useQueries", "useInfiniteQuery", "useMutation", "useIsFetching", "useIsMutating", "useQueryClient"]
-    autoImports: ["useQuery"],
+    // autoImports: ["useQuery"],
     // Pass the vue query client options here ...
     queryClientOptions: {
       defaultOptions: { queries: { staleTime: 5000 } } // default
@@ -21,10 +24,9 @@ export default defineNuxtConfig({
     // Pass the vue query plugin options here ....
     vueQueryPluginOptions: {}
   },
-  devtools: { enabled: true },
   modules: [
     "@pinia/nuxt",
     "@hebilicious/vue-query-nuxt",
-    "nuxt-auth-utils"
+    "nuxt-auth-utils",
   ],
 })

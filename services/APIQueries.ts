@@ -1,3 +1,4 @@
+import { Sleep } from "~/helpers/Sleep";
 class queryBuilder {
   baseURL = "";
   queryDefaultOptions = {};
@@ -21,11 +22,12 @@ class queryBuilder {
     return await fetch(`${this.baseURL}/todos`).then((res) => res.json());
   };
 
-  todo = (index: number) => {
+  todo =  (index: number) => {
     return {
       queryKey: ['todo', index],
-      queryFn: () => {
-        return this.fetcherOne(index)
+      queryFn: async () => {
+        await Sleep(2000);
+        return fetch(`${this.baseURL}/todos/${index}`).then((res) => res.json()); //this.fetcherOne(index)
       },
       staleTime: Infinity,
       cacheTime: Infinity,
@@ -35,8 +37,9 @@ class queryBuilder {
   todos = () => {
     return {
       queryKey: ["todos"],
-      queryFn: () => {
-        return this.fetcherMany() //fetch(`${this.baseURL}/todos`).then((res) => res.json());
+      queryFn: async () => {
+        await Sleep(2000);
+        return fetch(`${this.baseURL}/todos`).then((res) => res.json()); //this.fetcherMany() //
       },
       staleTime: Infinity,
       cacheTime: Infinity,
